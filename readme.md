@@ -341,7 +341,7 @@ SELECT * FROM rule_execution_logs WHERE execution_status = 'error';
 
 ### How to Add New Features
 
-**Interviewer asks: "How would you add email forwarding?"**
+**"How would you add email forwarding?"**
 ```python
 # 1. Create action class
 class ForwardEmailAction(Action):

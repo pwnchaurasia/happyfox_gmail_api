@@ -326,29 +326,7 @@ SELECT * FROM rule_execution_logs WHERE execution_status = 'error';
 - They auto-create on first run
 - If issues persist, delete `gmail_rules.db` and run again
 
-## 📚 Key Concepts for Interview
-
-### Why Factory Pattern?
-
-**Problem**: How to create objects dynamically based on JSON configuration?
-
-**Solution**: Factory pattern allows creating predicates/actions by name without if-else chains.
-```python
-# Without Factory (Bad)
-if predicate_name == "contains":
-    predicate = ContainsPredicate()
-elif predicate_name == "equals":
-    predicate = EqualsPredicate()
-# ... 50 more if-else statements
-
-# With Factory (Good)
-predicate = PredicateFactory.get_predicate(predicate_name)
-```
-
-**Benefits:**
-- Add new predicates by just registering them
-- No need to modify core code
-- Very extensible
+## Key Concepts
 
 ### Predicates vs Actions
 

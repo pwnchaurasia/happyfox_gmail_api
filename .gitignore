@@ -1,0 +1,8 @@
+.DS_Store
+
+.idea/
+.env
+gmail_rules.db
+__pycache___
+credentials.json
+token.json

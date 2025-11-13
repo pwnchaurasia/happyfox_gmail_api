@@ -1,0 +1,76 @@
+-- Gmail Rule Processor Database Schema
+-- This file is for reference only. Tables are auto-created by SQLAlchemy.
+-- You can use this for manual database setup if needed.
+
+-- Emails Table
+CREATE TABLE IF NOT EXISTS emails (
+    id VARCHAR(255) PRIMARY KEY,
+    thread_id VARCHAR(255),
+    from_address VARCHAR(500),
+    to_addresses TEXT,
+    cc_addresses TEXT,
+    bcc_addresses TEXT,
+    subject TEXT,
+    message_body TEXT,
+    snippet TEXT,
+    date_received DATETIME,
+    labels JSON,
+    is_read BOOLEAN DEFAULT 0,
+    is_starred BOOLEAN DEFAULT 0,
+    has_attachments BOOLEAN DEFAULT 0,
+    raw_headers JSON,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes for emails table
+CREATE INDEX IF NOT EXISTS idx_thread_id ON emails(thread_id);
+CREATE INDEX IF NOT EXISTS idx_from_address ON emails(from_address);
+CREATE INDEX IF NOT EXISTS idx_subject ON emails(subject);
+CREATE INDEX IF NOT EXISTS idx_date_received ON emails(date_received);
+CREATE INDEX IF NOT EXISTS idx_is_read ON emails(is_read);
+CREATE INDEX IF NOT EXISTS idx_date_received_desc ON emails(date_received DESC);
+CREATE INDEX IF NOT EXISTS idx_from_date ON emails(from_address, date_received);
+CREATE INDEX IF NOT EXISTS idx_subject_date ON emails(subject, date_received);
+
+-- Rule Execution Logs Table
+CREATE TABLE IF NOT EXISTS rule_execution_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email_id VARCHAR(255),
+    rule_name VARCHAR(255),
+    rule_conditions JSON,
+    actions_performed JSON,
+    execution_status VARCHAR(50),
+    error_message TEXT,
+    executed_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes for rule_execution_logs table
+CREATE INDEX IF NOT EXISTS idx_log_email_id ON rule_execution_logs(email_id);
+CREATE INDEX IF NOT EXISTS idx_log_rule_name ON rule_execution_logs(rule_name);
+CREATE INDEX IF NOT EXISTS idx_log_executed_at ON rule_execution_logs(executed_at);
+
+-- Sample Queries
+
+-- Get all unread emails
+-- SELECT * FROM emails WHERE is_read = 0;
+
+-- Get emails from specific sender
+-- SELECT * FROM emails WHERE from_address LIKE '%@tenmiles.com%';
+
+-- Get emails from last 7 days
+-- SELECT * FROM emails WHERE date_received >= datetime('now', '-7 days');
+
+-- Get rule execution logs for specific email
+-- SELECT * FROM rule_execution_logs WHERE email_id = 'your_email_id';
+
+-- Get failed rule executions
+-- SELECT * FROM rule_execution_logs WHERE execution_status = 'error';
+
+-- Count emails by sender domain
+-- SELECT
+--     SUBSTR(from_address, INSTR(from_address, '@') + 1) as domain,
+--     COUNT(*) as count
+-- FROM emails
+-- GROUP BY domain
+-- ORDER BY count DESC;

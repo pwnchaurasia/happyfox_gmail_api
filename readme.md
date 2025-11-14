@@ -47,7 +47,14 @@ pip install -r requirements.txt
       - Add yourself as a test user
       - Scopes: Gmail API
 
-4. **Run the application**
+   4. ENVs
+      - create a .env file in the main folder
+      ```commandline
+       DATABASE_URL=sqlite:///gmail_rules.db
+       GMAIL_CREDENTIALS_PATH=credentials.json
+       GMAIL_TOKEN_PATH=token.json
+    ```
+5. **Run the application**
 ```bash
 # Fetch emails (database auto-creates on first run)
 cd src

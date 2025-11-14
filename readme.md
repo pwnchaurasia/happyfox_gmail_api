@@ -364,3 +364,8 @@ class ForwardEmailAction(Action):
 ActionFactory.register(ForwardEmailAction)
 
 ```
+
+
+### Future scope & Known Issues
+- Can add a proper logger
+- Can use async for all the I/O operations

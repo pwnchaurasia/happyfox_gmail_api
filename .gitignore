@@ -6,3 +6,4 @@ gmail_rules.db
 __pycache___
 credentials.json
 token.json
+src/rules.json
